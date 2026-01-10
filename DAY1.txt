@@ -1,0 +1,28 @@
+Day 1 – Project Planning and Requirement Analysis
+
+Project Name:
+Nursery & Seed Management System
+
+Internship Program:
+CivoraX Internship Program – Civora Nexus Pvt. Ltd.
+
+Objective of Day 1:
+To understand the project requirements, identify user roles, and study the main modules before starting development.
+
+User Roles Identified:
+Admin – Manages the system, users, and reports
+Nursery Staff – Handles inventory, batch details, and plant health
+Customer – Views plants and places orders
+
+Core Modules Studied:
+User authentication and role-based access
+Inventory and stock management
+Batch and life cycle tracking
+Sales and order management
+Procurement and supplier management
+Administration and reporting
+
+Outcome of Day 1:
+Understood the project scope clearly
+Identified system users and modules
+Ready to start technical planning and design
