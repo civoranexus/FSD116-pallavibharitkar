@@ -1,0 +1,30 @@
+BACKEND SETUP PLANNING
+
+The backend of the project will be developed using Node.js with Express.js.
+A basic server will be created using a single file named server.js.
+The backend will be tested locally using the VS Code terminal.
+The focus will be on understanding basic request and response handling.
+
+DATABASE PLANNING
+
+MySQL will be used as the database because it is easy to understand.
+A simple database will be created to store project data.
+Basic tables such as users, plants, and orders will be planned.
+The backend will connect to the database to store and retrieve data
+using simple queries.
+
+AUTHENTICATION PLANNING
+
+A login system used.
+Basic username and password authentication will be used.
+Three user roles will be considered:Admin, Nursery Staff, and Customer.
+Access to the system will be controlled based on user roles.
+The authentication logic will be kept simple.
+
+BASIC IMPLEMENTATION PLANNING
+
+Basic frontend pages will be created using HTML and CSS.
+A simple login page will be developed.
+JavaScript will be used to connect the frontend with the backend.
+The application will be tested locally in the browser.
+Features will be added step by step after implementation.
