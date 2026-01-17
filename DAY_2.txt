@@ -1,0 +1,28 @@
+TECHNOLOGY PLANNING
+
+Frontend:
+HTML, CSS, and JavaScript will be used to build the user interface.
+These technologies are easy to understand.
+
+Backend:
+Node.js with Express.js will be used to handle server-side logic
+and API requests.
+
+Database:
+MySQL will be used to store user data, plant details, and order records.
+
+System Flow:
+User → Frontend → Backend → Database
+
+PROJECT STRUCTURE PLANNING
+
+The project will be divided into frontend and backend folders
+to keep the code organized.
+
+Planned Frontend Files:
+- index.html
+- style.css
+- script.js
+
+Planned Backend Files:
+- server .js
