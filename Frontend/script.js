@@ -1,22 +1,26 @@
-function loginUser() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
+  fetch("http://localhost:3000/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password
     })
-    .then(response => response.json())
+  })
+    .then(res => res.json())
     .then(data => {
-        alert(data.message);
+      if (data.success) {
+        document.getElementById("result").innerText = data.message;
+      } else {
+        document.getElementById("result").innerText = data.message;
+      }
     })
-    .catch(error => {
-        alert("Error connecting to backend");
+    .catch(err => {
+      console.log(err);
     });
 }

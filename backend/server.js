@@ -3,20 +3,18 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());          
-app.use(express.json());  
-
-app.get("/", (req, res) => {
-  res.send("Backend is running");
-});
+app.use(cors());
+app.use(express.json()); // VERY IMPORTANT
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
+  console.log(username, password); // for checking
+
   if (username === "admin" && password === "admin123") {
-    res.json({ message: "Login successful" });
+    res.json({ success: true, message: "Login successful" });
   } else {
-    res.json({ message: "Invalid credentials" });
+    res.json({ success: false, message: "Login failed" });
   }
 });
 

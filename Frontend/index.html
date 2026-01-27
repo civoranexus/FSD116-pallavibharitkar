@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nursery & Seed Management System</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Login Page</title>
 </head>
 <body>
 
-    <h1>Nursery & Seed Management System</h1>
-    <h2>Login</h2>
+<h2>Login</h2>
 
-    <form>
-        <label>Username:</label><br>
-        <input type="text" id = "username" placeholder="Enter username"><br><br>
+<input type="text" id="username" placeholder="Username"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
 
-        <label>Password:</label><br>
-        <input type="password" id="password" placeholder="Enter password"><br><br>
+<button onclick="login()">Login</button>
 
-        <button type="button" onclick="loginUser()">Login</button>
-    </form>
-    <script src="script.js"></script>
+<p id="result"></p>
 
+<script src="script.js"></script>
 </body>
 </html>
