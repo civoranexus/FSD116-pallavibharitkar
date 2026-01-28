@@ -2,22 +2,26 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-
 app.use(cors());
-app.use(express.json()); // VERY IMPORTANT
+app.use(express.json());
 
+// test route
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
+// login route
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
-  console.log(username, password); // for checking
-
-  if (username === "admin" && password === "admin123") {
+  // demo login
+  if (username === "admin" && password === "1234") {
     res.json({ success: true, message: "Login successful" });
   } else {
-    res.json({ success: false, message: "Login failed" });
+    res.json({ success: false, message: "Invalid credentials" });
   }
 });
 
 app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+  console.log("Server started on port 3000");
 });
