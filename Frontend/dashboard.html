@@ -4,7 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard - Nursery System</title>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background:darkgreen;
+    }
+
+    .logout {
+      background: red;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 15px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #007bff;
+      color: white;
+    }
+
+    #msg {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
@@ -12,18 +79,41 @@
     <h1>Nursery & Seed Management System</h1>
     <h2>Dashboard</h2>
 
-    <div class="card">
-      <p><b>Welcome:</b> <span id="userName"></span></p>
-      <p><b>Status:</b> Login Successful </p>
-    </div>
+    <p><b>Welcome:</b> <span id="userName"></span></p>
 
-    <div class="modules">
-      <button onclick="showMsg('Add Plant/Seed Module')">Add Plant/Seed</button>
-      <button onclick="showMsg('View Plant/Seed List Module')">View List</button>
-      <button onclick="logout()">Logout</button>
-    </div>
+    <h3>Add Plant / Seed</h3>
 
-    <p id="message" style="margin-top:15px; font-weight:bold;"></p>
+    <input type="text" id="plantName" placeholder="Plant/Seed Name" />
+    
+    <select id="plantType">
+      <option value="">Select Type</option>
+      <option value="Plant">Plant</option>
+      <option value="Seed">Seed</option>
+    </select>
+
+    <input type="number" id="quantity" placeholder="Quantity" />
+
+    <button onclick="addPlant()">Add</button>
+
+    <p id="msg"></p>
+
+    <h3>Plant / Seed List</h3>
+
+    <button onclick="loadPlants()">View List</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody id="plantTable"></tbody>
+    </table>
+
+    <button class="logout" onclick="logout()">Logout</button>
   </div>
 
   <script>
@@ -31,8 +121,49 @@
     const username = localStorage.getItem("username");
     document.getElementById("userName").innerText = username ? username : "User";
 
-    function showMsg(text) {
-      document.getElementById("message").innerText = text + " (Coming Soon)";
+    async function addPlant() {
+      const plantName = document.getElementById("plantName").value;
+      const plantType = document.getElementById("plantType").value;
+      const quantity = document.getElementById("quantity").value;
+      const msg = document.getElementById("msg");
+
+      const response = await fetch("http://localhost:3000/addPlant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plantName, plantType, quantity })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        msg.style.color = "green";
+        msg.innerText = data.message;
+        document.getElementById("plantName").value = "";
+        document.getElementById("plantType").value = "";
+        document.getElementById("quantity").value = "";
+      } else {
+        msg.style.color = "red";
+        msg.innerText = data.message;
+      }
+    }
+
+    async function loadPlants() {
+      const response = await fetch("http://localhost:3000/plants");
+      const plants = await response.json();
+
+      const table = document.getElementById("plantTable");
+      table.innerHTML = "";
+
+      plants.forEach(p => {
+        table.innerHTML += `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.plantName}</td>
+            <td>${p.plantType}</td>
+            <td>${p.quantity}</td>
+          </tr>
+        `;
+      });
     }
 
     function logout() {
