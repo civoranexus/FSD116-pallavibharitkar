@@ -1,30 +1,32 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const cors = require("cors");
-require("dotenv").config();
+const connectDB = require("./config/db");   // make sure path is correct
+
+dotenv.config();
 
 const app = express();
 
-// ✅ MUST middleware before routes
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// test
+// Connect MongoDB
+connectDB();
+
+// Test Route
 app.get("/", (req, res) => {
-  res.send("API running...");
+  res.send("Backend Server Running Successfully!");
 });
 
-// routes
+// User Routes
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("✅ MongoDB Connected");
-    app.listen(process.env.PORT || 5000, () =>
-      console.log("✅ Server running on port 5000")
-    );
-  })
-  .catch((err) => console.log("❌ MongoDB error:", err.message));
+// Port
+const PORT = process.env.PORT || 5000;
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
