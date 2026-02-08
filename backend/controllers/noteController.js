@@ -1,73 +1,52 @@
 const Note = require("../models/note");
 
-// CREATE NOTE (Protected)
-const createNote = async (req, res) => {
+// CREATE note
+exports.createNote = async (req, res) => {
   try {
-    const { title, content } = req.body;
-
-    if (!title || !content) {
-      return res.status(400).json({ message: "Title and content required" });
-    }
-
     const note = await Note.create({
       user: req.user.id,
-      title,
-      content
+      title: req.body.title,
+      content: req.body.content,
     });
-
-    res.status(201).json({ message: "Note created", note });
+    res.status(201).json(note);
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
-// GET ALL NOTES (Protected)
-const getNotes = async (req, res) => {
+// GET user notes
+exports.getNotes = async (req, res) => {
   try {
-    const notes = await Note.find({ user: req.user.id }).sort({ createdAt: -1 });
-    res.status(200).json({ total: notes.length, notes });
+    const notes = await Note.find({ user: req.user.id });
+    res.json(notes);
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
-// UPDATE NOTE (Protected)
-const updateNote = async (req, res) => {
+// UPDATE note
+exports.updateNote = async (req, res) => {
   try {
-    const { title, content } = req.body;
-
     const note = await Note.findOneAndUpdate(
       { _id: req.params.id, user: req.user.id },
-      { title, content },
+      req.body,
       { new: true }
     );
-
-    if (!note) {
-      return res.status(404).json({ message: "Note not found" });
-    }
-
-    res.status(200).json({ message: "Note updated", note });
+    res.json(note);
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
-// DELETE NOTE (Protected)
-const deleteNote = async (req, res) => {
+// DELETE note
+exports.deleteNote = async (req, res) => {
   try {
-    const note = await Note.findOneAndDelete({
+    await Note.findOneAndDelete({
       _id: req.params.id,
-      user: req.user.id
+      user: req.user.id,
     });
-
-    if (!note) {
-      return res.status(404).json({ message: "Note not found" });
-    }
-
-    res.status(200).json({ message: "Note deleted", note });
+    res.json({ message: "Note deleted" });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: "Server Error" });
   }
 };
-
-module.exports = { createNote, getNotes, updateNote, deleteNote };
